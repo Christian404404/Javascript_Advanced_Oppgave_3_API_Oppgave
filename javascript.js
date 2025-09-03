@@ -22,9 +22,7 @@ function regexRemoveTags(html) {
 
 async function findShows(userSearch) {
   printMsg("Laster inn...");
-  // fetch(`${API_URL_QUERY}${encodeURIComponent(userSearch)}`)
-  // .then((res) => res.json())
-  // .then((data) => {
+
   try {
     const response = await fetch(
       `${API_URL_QUERY}${encodeURIComponent(userSearch)}`
@@ -44,12 +42,12 @@ async function findShows(userSearch) {
       const card = document.createElement("div");
       card.classList.add("show-card");
 
-      const fantIkkeBilde = "img/404-error-page-free-download-free-vector.jpg";
+      const noImgFound = "img/404-error-page-free-download-free-vector.jpg";
       const image = document.createElement("img");
-      image.src = show.image?.medium || fantIkkeBilde;
+      image.src = show.image?.medium || noImgFound;
       image.alt = show.name;
       if (!show.image?.medium) {
-        image.classList.add("finnesIkke-img");
+        image.classList.add("notFound-img");
       }
 
       const info = document.createElement("div");
@@ -58,13 +56,13 @@ async function findShows(userSearch) {
       const title = document.createElement("h2");
       title.textContent = show.name;
 
-      const oppsumering = document.createElement("p");
-      oppsumering.textContent =
+      const summary = document.createElement("p");
+      summary.textContent =
         regexRemoveTags(show.summary) ||
         "Ingen oppsumering ble funnet for denne serien.";
 
       info.appendChild(title);
-      info.appendChild(oppsumering);
+      info.appendChild(summary);
       card.appendChild(image);
       card.appendChild(info);
       showContainer.appendChild(card);
@@ -76,6 +74,7 @@ async function findShows(userSearch) {
 }
 
 searchButton.addEventListener("click", () => {
+  // "/ initilizing regex, \s+ removing at least one whitespace in front or back. /g global = doesn't stop at first match."
   const userSearch = searchInput.value.trim().replace(/\s+/g, " ");
   if (userSearch) {
     findShows(userSearch);
@@ -93,6 +92,7 @@ searchInput.addEventListener("keydown", (e) => {
   }
 });
 
+// Used this for initial testing, might add it in back later just to have something on load.
 // window.addEventListener("DOMContentLoaded", () => {
 //   findShows("office");
 // });
