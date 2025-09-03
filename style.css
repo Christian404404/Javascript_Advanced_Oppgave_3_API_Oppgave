@@ -1,0 +1,78 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  background-color: darkgray;
+}
+
+h1 {
+  margin-right: 2rem;
+  margin-left: 2rem;
+  margin-bottom: 1.5rem;
+  margin-top: 1.5rem;
+}
+
+h2 {
+  padding: 2rem 2rem 2rem 2rem;
+}
+
+p {
+  padding: 2rem 2rem 2rem 2rem;
+}
+
+#search-container {
+  margin-bottom: 20px;
+}
+
+#search-input {
+  margin-right: 2rem;
+  margin-left: 2rem;
+  padding: 10px;
+  font-size: 16px;
+  width: 300px;
+}
+
+#search-button {
+  padding: 10px 20px;
+  font-size: 16px;
+  margin-left: 10px;
+  cursor: pointer;
+  border-radius: 0.4rem;
+}
+#reset-button {
+  padding: 10px 20px;
+  font-size: 16px;
+  margin-left: 10px;
+  cursor: pointer;
+  background-color: rgb(255, 63, 63);
+  border-radius: 0.4rem;
+  color: black;
+  font-weight: 600;
+}
+
+.show-card {
+  display: flex;
+  flex-flow: row;
+  border: 1px solid #ccc;
+  margin-right: 2rem;
+  margin-left: 2rem;
+  margin-bottom: 20px;
+}
+
+.show-card img {
+  margin-right: 15px;
+}
+
+.finnesIkke-img {
+  width: 210px;
+  height: 295px;
+  object-fit: contain;
+  background-color: #111a45;
+}
+
+.info h2 {
+  margin: 0 0 10px 0;
+}
