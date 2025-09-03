@@ -17,7 +17,17 @@ function printMsg(message) {
 
 function regexRemoveTags(html) {
   if (!html) return "Ingen oppsumering ble funnet.";
-  return html.replace(/<[^>]*>/g, "");
+  // I kind of understand this regEx, but I'm not 100% comfortable with it yet.
+  // targets opening tag <, then [^>]* targets everything inside "<>" but not the closing bracket itself.
+  // *> means 0 or more of the preceeding character(s)(bracket included), so everything inside it, with a /g global flag so it does not stop after the first match.
+  // "" means replace everything found with an empty string.
+  // return html.replace(/<[^>]*>/g, "");
+
+  // init regEx / targets tag <, then [^<>] targest everything inside "<>" but not the brackets themselves.
+  // *> means 0 or more of the previous character, so everything inside it, and the closing bracket.
+  // /g means global, so it does not stop after the first match, it continues to the end of the string.
+  // "" means replace everything found with an empty string.
+  return html.replace(/<[^<>]*>/g, "");
 }
 
 async function findShows(userSearch) {
@@ -61,8 +71,25 @@ async function findShows(userSearch) {
         regexRemoveTags(show.summary) ||
         "Ingen oppsumering ble funnet for denne serien.";
 
+      const imdbId = show.externals?.imdb;
+      const imdbLink = document.createElement("a");
+
+      if (imdbId) {
+        imdbLink.href = `https://www.imdb.com/title/${imdbId}/`;
+        imdbLink.textContent = "Se på IMDB";
+      } else {
+        imdbLink.href = `https://www.imdb.com/find?q=${encodeURIComponent(
+          show.name
+        )}`;
+        imdbLink.textContent = "Søk på IMDB";
+      }
+      imdbLink.target = "_blank";
+      imdbLink.rel = "noopener noreferrer";
+      imdbLink.classList.add("imdb-link");
+
       info.appendChild(title);
       info.appendChild(summary);
+      info.appendChild(imdbLink);
       card.appendChild(image);
       card.appendChild(info);
       showContainer.appendChild(card);
@@ -74,7 +101,7 @@ async function findShows(userSearch) {
 }
 
 searchButton.addEventListener("click", () => {
-  // "/ initilizing regex, \s+ removing at least one whitespace in front or back. /g global = doesn't stop at first match."
+  // "/ initilizing regex, \s+ removing at least one whitespace from the front and back. /g global = doesn't stop at first match."
   const userSearch = searchInput.value.trim().replace(/\s+/g, " ");
   if (userSearch) {
     findShows(userSearch);

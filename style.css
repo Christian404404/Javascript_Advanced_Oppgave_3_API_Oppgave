@@ -76,3 +76,12 @@ p {
 .info h2 {
   margin: 0 0 10px 0;
 }
+
+.imdb-link {
+  color: blue;
+}
+
+.imdb-link:hover {
+  text-decoration: underline;
+  color: darkblue;
+}
